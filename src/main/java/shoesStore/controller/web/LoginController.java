@@ -30,21 +30,23 @@ public class LoginController extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			
-			UserService userService = new UserService();
-			
-
-			User user = userService.isAuthorize(username, password);
-			if(user!=null) {
-				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
-				response.sendRedirect("home");
-			}
-			else {
-				request.setAttribute("ErrorLogin", "Wrong username or password!");
-				request.getRequestDispatcher("/login.jsp").forward(request, response);
-			}
+	    String username = request.getParameter("username");
+	    String password = request.getParameter("password");
+	    
+	    UserService userService = new UserService();
+	    
+	    User user = userService.isAuthorize(username, password);
+	    if (user != null) {
+	        HttpSession session = request.getSession();
+	        session.setAttribute("user", user);
+	        if(user.getRole().equalsIgnoreCase("user"))
+	        	response.sendRedirect("home");
+	        else 
+	        	response.sendRedirect("admin-home");
+	    } else {
+	        request.setAttribute("ErrorLogin", "Wrong username or password!");
+	        RequestDispatcher rd = request.getRequestDispatcher("/view/web/Login.jsp");
+	        rd.forward(request, response);
+	    }
 	}
 }

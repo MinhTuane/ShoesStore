@@ -74,7 +74,7 @@
 							</li>
 
 							<li class="label1" data-label1="hot">
-								<a href="shoping-cart">Features</a>
+								<a href="shop-cart">Features</a>
 							</li>
 
 							<li>
@@ -222,8 +222,8 @@
 					</li>
 
 					<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-							My Account
+						<a href="logout" class="stext-102 cl2 hov-cl1 trans-04">
+							Logout
 						</a>
 					</li>
 
@@ -352,11 +352,11 @@
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+						<a href="shop-cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
 						</a>
 
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+						<a href="shop-cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Check Out
 						</a>
 					</div>
@@ -431,7 +431,7 @@
 							</div>
 						</div>
 					</a>
-				</div>S
+				</div>
 			</div>
 
 			<div class="size-202 m-lr-auto respon4">

@@ -46,6 +46,7 @@
 		List<Product> products =(List<Product>) request.getAttribute("products");
 		Product chosingProduct = null;
 		
+		List<Product> productCart =(List<Product>) request.getAttribute("productCart");
 	%>
 
 	<!-- Header -->
@@ -64,8 +65,8 @@
 							Help & FAQs
 						</a>
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
+						<a href="logout" class="flex-c-m trans-04 p-lr-25">
+							Logout
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
@@ -99,15 +100,15 @@
 							</li>
 
 							<li class="label1" data-label1="hot">
-								<a href="shoping-cart">Features</a>
+								<a href="shop-cart">Features</a>
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+								<a href="blog">Blog</a>
 							</li>
 
 							<li>
-								<a href="about.html">About</a>
+								<a href="about">About</a>
 							</li>
 
 							<li>
@@ -213,11 +214,11 @@
 				</li>
 
 				<li>
-					<a href="blog.html">Blog</a>
+					<a href="blog">Blog</a>
 				</li>
 
 				<li>
-					<a href="about.html">About</a>
+					<a href="about">About</a>
 				</li>
 
 				<li>
@@ -260,66 +261,41 @@
 			
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
+				<%double sumCart=0;
+				if(productCart!=null) { 
+					for(Product product : productCart) {
+						String image = Base64.getEncoder().encodeToString(product.getImage());
+						sumCart += product.getCost();
+				%>
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
-							<img src="view/images/item-cart-01.jpg" alt="IMG">
+							<img src="data:image/png;base64, <%=image%>" alt="IMG">
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								White Shirt Pleat
+								<%=product.getName() %>
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $19.00
+								1 x $<%=product.getCost() %>
 							</span>
 						</div>
 					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="view/images/item-cart-02.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Converse All Star
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $39.00
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="view/images/item-cart-03.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Nixon Porter Leather
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $17.00
-							</span>
-						</div>
-					</li>
+					<%}} %>				
 				</ul>
 				
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
+						Total: $<%=sumCart %>
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+						<a href="shop-cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
 						</a>
 
-						<a href="shoping-cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+						<a href="shop-cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Check Out
 						</a>
 					</div>
@@ -584,11 +560,10 @@
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
-							<img src="data:image/png;base64, <%=image%>" alt="IMG-PRODUCT">
+							<img src="data:image/png;base64, <%=image%>" alt="IMG-PRODUCT" class="js-image-b2">
 
 							<a href="#" 
 							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" 
-							onclick="<%chosingProduct=product; %>" 
 							>
 								Quick View
 							</a>
@@ -788,9 +763,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 				<button class="how-pos3 hov3 trans-04 js-hide-modal1">
 					<img src="view/images/icons/icon-close.png" alt="CLOSE">
 				</button>
-				<%
-					String imageChosen = Base64.getEncoder().encodeToString(chosingProduct.getImage());
-				%>
+				
 				<div class="row">
 					<div class="col-md-6 col-lg-7 p-b-30">
 						<div class="p-l-25 p-r-30 p-lr-0-lg">
@@ -799,11 +772,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 								<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 						
 								<div class="slick3 gallery-lb">
-									<div class="item-slick3" data-thumb="data:image/png;base64,<%=imageChosen%>">
+									<div class="item-slick3" data-thumb="">
 										<div class="wrap-pic-w pos-relative">
-											<img src="data:image/png;base64,<%=imageChosen%>" alt="IMG-PRODUCT">
+											<img id="productImage" src="" alt="IMG-PRODUCT">
 
-											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="data:image/png;base64,<%=imageChosen%>">
+											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="">
 												<i class="fa fa-expand"></i>
 											</a>
 										</div>
@@ -815,12 +788,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 					
 					<div class="col-md-6 col-lg-5 p-b-30">
 						<div class="p-r-50 p-t-5 p-lr-0-lg">
-							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-								<%=chosingProduct.getName() %>
+							<h4 id="productName" class="mtext-105 cl2 js-name-detail p-b-14">
+								
 							</h4>
 
 							<span class="mtext-106 cl2">
-								$<%=chosingProduct.getCost() %>
+								
 							</span>
 
 							<p class="stext-102 cl3 p-t-23">
@@ -836,8 +809,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time">
-												<option>Choose an option</option>
+											<select class="js-select2" id="productSize" name="time">
 												<option>Size S</option>
 												<option>Size M</option>
 												<option>Size L</option>
@@ -855,8 +827,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time">
-												<option>Choose an option</option>
+											<select class="js-select2" id="productColor" name="time">
 												<option>Red</option>
 												<option>Blue</option>
 												<option>White</option>
@@ -874,7 +845,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 												<i class="fs-16 zmdi zmdi-minus"></i>
 											</div>
 
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+											<input id="productQuantity" class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
 
 											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 												<i class="fs-16 zmdi zmdi-plus"></i>
@@ -990,12 +961,52 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		/*---------------------------------------------*/
 
 		$('.js-addcart-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
-			});
+		    var $modal = $(this).closest('.wrap-modal1'); 
+		
+		    $(this).on('click', function(){
+		        var productName = $modal.find('#productName').text().trim();
+		        var productSize = $modal.find('#productSize').val();
+		        var productColor = $modal.find('#productColor').val();
+		        var productQuantity = $modal.find('#productQuantity').val();
+		
+		        // Send an AJAX request to AddToCartServlet
+		        $.ajax({
+		            type: "POST",
+		            url: "AddToCartServlet",
+		            data: {
+		                name: productName,
+		                size: productSize,
+		                color: productColor,
+		                quantity: productQuantity
+		            },
+		            success: function(response) {
+		                // Show success message to the user using SweetAlert
+		                location.reload();
+		                swal(productName, response, "success");
+		                
+		            },
+		            error: function(xhr, status, error) {
+		                // Show error message to the user using SweetAlert
+		                swal("Error", "Failed to add product to cart", "error");
+		                console.error("Error adding to cart:", error);
+		            }
+		        });
+		    });
 		});
 	
+	</script>
+	
+	<script type="text/javascript">
+	 $(document).ready(function(){
+	        $('.js-show-modal1').click(function(e){
+	            e.preventDefault();
+	            var productName = $(this).closest('.block2').find('.js-name-b2').text();
+	            var productImage = $(this).closest('.block2').find('.js-image-b2').attr('src');
+	            $('.item-slick3').attr('data-thumb', productImage);
+	            $('#productName').text(productName);
+	            $('#productImage').attr('src', productImage);
+	        });
+	    });
 	</script>
 <!--===============================================================================================-->
 	<script src="view/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>

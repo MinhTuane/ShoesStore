@@ -1,82 +1,146 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Login</title>
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  rel="stylesheet"
-/>
-<!-- Google Fonts -->
-<link
-  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-  rel="stylesheet"
-/>
-<!-- MDB -->
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
-  rel="stylesheet"
-/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .card {
+            max-width: 400px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 0.75rem;
+            font-size: 1rem;
+            width: 100%;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
 <body>
-	<section class="vh-100" style="background-color: #508bfc;">
-		<div class="container py-5 h-100">
-			<div
-				class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-12 col-md-8 col-lg-6 col-xl-5">
-					<div class="card shadow-2-strong" style="border-radius: 1rem;">
-						<div class="card-body p-5 text-center">
 
-							<h3 class="mb-5">Sign in</h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Login</h3>
+                </div>
+                <div class="card-body">
+                    <%-- Error Message Section --%>
+                    <div id="error-message" class="error-message">
+                        <% if (request.getAttribute("ErrorLogin") != null) { %>
+                            <%= request.getAttribute("ErrorLogin") %>
+                        <% } %>
+                    </div>
 
-							<div data-mdb-input-init class="form-outline mb-4">
-								<input type="email" id="username"
-									class="form-control form-control-lg" /> <label
-									class="form-label" for="typeEmailX-2">Username</label>
-							</div>
+                    <form id="loginForm" action="login" method="POST">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
 
-							<div data-mdb-input-init class="form-outline mb-4">
-								<input type="password" id="password"
-									class="form-control form-control-lg" /> <label
-									class="form-label" for="typePasswordX-2">Password</label>
-							</div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
 
-							<!-- Checkbox -->
-							<div class="form-check d-flex justify-content-start mb-4">
-								<input class="form-check-input" type="checkbox" value=""
-									id="form1Example3" /> <label class="form-check-label"
-									for="form1Example3"> Remember password </label>
-							</div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
 
-							<button data-mdb-button-init data-mdb-ripple-init
-								class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
 
-							<hr class="my-4">
+                    <div class="register-link">
+                        <a href="register">Create an account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-							<button data-mdb-button-init data-mdb-ripple-init
-								class="btn btn-lg btn-block btn-primary"
-								style="background-color: #dd4b39;" type="submit">
-								<i class="fab fa-google me-2"></i> Sign in with google
-							</button>
-							<button data-mdb-button-init data-mdb-ripple-init
-								class="btn btn-lg btn-block btn-primary mb-2"
-								style="background-color: #3b5998;" type="submit">
-								<i class="fab fa-facebook-f me-2"></i>Sign in with facebook
-							</button>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	
-<!-- MDB -->
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"
-></script>
+<!-- Custom JavaScript for error message popup -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Check if URL contains error parameter
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('error')) {
+            String error =(String) request.getAttribute("ErrorLogin");
+            showAlert(error);
+        }
+    });
+
+    function showAlert(message) {
+        alert(message);
+    }
+</script>
+
 </body>
 </html>

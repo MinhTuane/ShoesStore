@@ -15,30 +15,27 @@ public class UserService {
 
 		
 		static DatabaseConnector db = new DatabaseConnector();
-		public User isAuthorize(String username,String password) {
-			String sql = "Select * from users where username= ? and password =?";
-			User user= null;
-			try(Connection conn = db.getConnection();
-				PreparedStatement ppst = conn.prepareStatement(sql)){
-					ppst.setString(1, username);
-					ppst.setString(2, password);
-					
-				try(ResultSet rs = ppst.executeQuery()) {
-					if(rs.next()) {
-						int id = rs.getInt("id");
-						String passwordDb = rs.getString("password");
-						String role = rs.getString("role");
-						user = new User(id,username,password,role);
-						user.setCart(getCart(id));
-						user.setLiked(getLiked(id));
-						
-					}
-				}
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}
-			return user;
+		public User isAuthorize(String username, String password) {
+		    String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+		    User user = null;
+		    try (Connection conn = db.getConnection();
+		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		        pstmt.setString(1, username);
+		        pstmt.setString(2, password);
+		        
+		        try (ResultSet rs = pstmt.executeQuery()) {
+		            if (rs.next()) {
+		                int id = rs.getInt("id");
+		                String role = rs.getString("role");
+		                user = new User(id, username, password, role);
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return user;
 		}
+
 		
 		public List<Product> getCart(int userId) {
 			List<Product> cart = new ArrayList<>();
@@ -137,6 +134,36 @@ public class UserService {
 	            stmt.executeUpdate();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
+	        }
+	    }
+	    
+	    public boolean createUser(String username, String password) {
+	        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+	        try (Connection conn = db.getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, username);
+	            pstmt.setString(2, password);
+	            pstmt.setString(3, "user");
+	            int rowsInserted = pstmt.executeUpdate();
+	            return rowsInserted > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	    
+	    public boolean createAdmin(String username, String password) {
+	        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+	        try (Connection conn = db.getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, username);
+	            pstmt.setString(2, password);
+	            pstmt.setString(3, "admin");
+	            int rowsInserted = pstmt.executeUpdate();
+	            return rowsInserted > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
 	        }
 	    }
 }

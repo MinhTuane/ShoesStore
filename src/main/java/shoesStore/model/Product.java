@@ -1,5 +1,7 @@
 package shoesStore.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 
 
@@ -17,7 +19,7 @@ public class Product {
 		super();
 		this.id = id;
 		this.name = name;
-		this.cost = cost;
+		this.cost = roundToTwo(cost);
 		this.image = image;
 		this.date = date;
 		this.sold = sold;
@@ -65,5 +67,9 @@ public class Product {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+	public static double roundToTwo(double value) {
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 }

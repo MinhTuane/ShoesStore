@@ -163,6 +163,7 @@ public class ProductDAO implements InterfaceDAO<Product> {
 			pstmt.setInt(7, t.getId());
 
 			pstmt.executeUpdate();
+			conn.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -179,6 +180,7 @@ public class ProductDAO implements InterfaceDAO<Product> {
 
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
+			conn.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -197,5 +199,24 @@ public class ProductDAO implements InterfaceDAO<Product> {
 
         return imageBytes;
     }
+    public int getIdByName(String name) {
+    	String sql = "SELECT * FROM products WHERE name = ?";
+		int id=-1;
+		try (Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+			pstmt.setString(1, name);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					id = rs.getInt("id");		
+				}
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return id;
+    }
 }

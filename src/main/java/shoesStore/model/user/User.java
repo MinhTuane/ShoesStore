@@ -8,8 +8,6 @@ public class User {
 		private int id;
 		private String username;
 		private String password;
-		private List<Product> cart;
-		private List<Product> liked;
 		private String role;
 		
 		public User(int id, String username, String password, String role) {
@@ -37,18 +35,7 @@ public class User {
 		public void setPassword(String password) {
 			this.password = password;
 		}
-		public List<Product> getCart() {
-			return cart;
-		}
-		public void setCart(List<Product> cart) {
-			this.cart = cart;
-		}
-		public List<Product> getLiked() {
-			return liked;
-		}
-		public void setLiked(List<Product> liked) {
-			this.liked = liked;
-		}
+
 		public String getRole() {
 			return role;
 		}
